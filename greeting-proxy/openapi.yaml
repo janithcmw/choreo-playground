@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: Greeting Proxy
+  description: Non-protected proxy that forwards requests to the OAuth2-secured greeting service.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8091/proxy
+paths:
+  /hello:
+    get:
+      operationId: proxyGetHello
+      summary: Forward GET greeting to the protected greeting service
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+            default: World
+      responses:
+        '200':
+          description: Greeting response from the protected service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetResponse'
+        '500':
+          description: Failed to reach the protected service
+    post:
+      operationId: proxyPostHello
+      summary: Forward POST greeting to the protected greeting service
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GreetRequest'
+      responses:
+        '200':
+          description: Greeting response from the protected service
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetResponse'
+        '500':
+          description: Failed to reach the protected service
+  /health:
+    get:
+      operationId: proxyHealth
+      summary: Health check
+      responses:
+        '200':
+          description: Proxy is healthy
+
+components:
+  schemas:
+    GreetRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: John
+    GreetResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Hello, John!"

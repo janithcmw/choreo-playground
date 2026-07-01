@@ -1,0 +1,8 @@
+version: 0.1
+endpoints:
+  - name: greeting-proxy
+    port: 8091
+    type: REST
+    networkVisibility: Public
+    context: /proxy
+    schemaFilePath: openapi.yaml
