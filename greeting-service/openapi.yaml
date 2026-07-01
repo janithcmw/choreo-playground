@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: Choreo Greeting Service
+  description: A simple greeting API for learning Choreo deployments.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8090/greet
+paths:
+  /hello:
+    get:
+      operationId: getHello
+      summary: Greet by name via query parameter
+      parameters:
+        - name: name
+          in: query
+          required: false
+          schema:
+            type: string
+            default: World
+      responses:
+        '200':
+          description: Greeting message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetResponse'
+    post:
+      operationId: postHello
+      summary: Greet by name via request body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GreetRequest'
+      responses:
+        '200':
+          description: Greeting message
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetResponse'
+  /health:
+    get:
+      operationId: getHealth
+      summary: Health check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GreetResponse'
+
+components:
+  schemas:
+    GreetRequest:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: John
+    GreetResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Hello, John!"

@@ -1,0 +1,8 @@
+version: 0.1
+endpoints:
+  - name: choreo-greeting-service
+    port: 8090
+    type: REST
+    networkVisibility: Public
+    context: /greet
+    schemaFilePath: openapi.yaml
