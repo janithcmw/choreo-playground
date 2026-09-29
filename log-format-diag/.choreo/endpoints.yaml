@@ -1,0 +1,8 @@
+version: 0.1
+endpoints:
+  - name: log-format-diag
+    port: 8092
+    type: REST
+    networkVisibility: Public
+    context: /diag
+    schemaFilePath: openapi.yaml

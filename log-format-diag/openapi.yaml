@@ -1,0 +1,46 @@
+openapi: 3.0.3
+info:
+  title: Log Format Diagnostics
+  description: Reproduces the cst-commons diagnostic log:printInfo pattern to compare logfmt vs json output in Choreo Application Logs.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8092/diag
+paths:
+  /logtest:
+    get:
+      operationId: getLogTest
+      summary: Log a diagnostic line with the same key-values as the CST ACR-missing-product path
+      parameters:
+        - name: tag
+          in: query
+          required: false
+          schema:
+            type: string
+            default: wso2is-4.5.0.437
+      responses:
+        '200':
+          description: Diagnostic line logged
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagResponse'
+  /health:
+    get:
+      operationId: getHealth
+      summary: Health check
+      responses:
+        '200':
+          description: Service is healthy
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DiagResponse'
+
+components:
+  schemas:
+    DiagResponse:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "logged diagnostic line for tag=wso2is-4.5.0.437"
