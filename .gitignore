@@ -1,4 +1,5 @@
 target/
 Dependencies.toml
 Config.toml
+!log-format-diag/Config.toml
 .idea/
